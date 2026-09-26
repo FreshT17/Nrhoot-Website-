@@ -22,8 +22,9 @@
     });
   });
 
-  // Waitlist: POST the fields to the Google Apps Script web app, which appends
-  // a row to the "Nrhoot waitlist request" sheet (see scripts/waitlist-apps-script.gs).
+  // Waitlist + Help: POST the fields to the Google Apps Script web app, which appends
+  // a waitlist row to the "Nrhoot waitlist request" sheet, or (form=help) forwards the
+  // question to Zoho Flow for email (see scripts/waitlist-apps-script.gs).
   // A form-encoded body keeps this a "simple" request, so there's no CORS preflight.
   document.querySelectorAll('form[data-sheet-endpoint]').forEach(function (form) {
     var status = form.querySelector('.form-status');
@@ -45,7 +46,7 @@
         .then(function (data) {
           if (!data || !data.ok) throw new Error('rejected');
           form.reset();
-          if (status) status.textContent = 'You’re on the list! We’ll email you when Nrhoot is ready.';
+          if (status) status.textContent = form.dataset.success || 'You’re on the list! We’ll email you when Nrhoot is ready.';
         })
         .catch(function () {
           if (status) status.textContent = 'Something went wrong, so this wasn’t sent. Please try again.';
