@@ -12,6 +12,15 @@ Update this file after user corrections or post-mortems so the same mistakes are
 
 ## Entries
 
+### 2026-09-26 — Waitlist form → Google Sheet (Apps Script web app)
+- **Setup:** `waitlist.html` form has `data-sheet-endpoint="<Apps Script /exec URL>"`; `site.js` POSTs it as `URLSearchParams` (a simple request, so there's no CORS preflight) and expects `{ok:true}`. The script source is in `scripts/waitlist-apps-script.gs`, bound to the Drive sheet "Nrhoot waitlist request" (Sheet1). Row order: Date, Name, Email, City, Test User? (blank), Location. Column F is labeled "Location" but holds the early-access Yes/No, the same as the old Framer form's rows.
+- **Pattern:** The browser reports "blocked by CORS policy: No 'Access-Control-Allow-Origin'" whenever Google returns an HTML error page instead of the script's JSON. On first deploy this was an **Access Denied / "You need access"** page, because the deployment's access setting wasn't plain "Anyone".
+- **Fix:** Diagnose with `curl -s -X POST --data 'name=' "<URL>" | grep -oiE "<title>[^<]*</title>|you need access"`. Then fix the setting under Deploy → Manage deployments → Edit: set Execute as **Me**, Who has access **Anyone**, and Version **New version** (the URL stays the same). Any later script edit also needs a New version, or the live URL keeps running the old code.
+- **Pattern:** After access was fixed, the endpoint returned **"Script function not found: doPost"**. The code wasn't saved into Code.gs, or it was saved but not deployed as a New version. Fix: paste the script into Code.gs, press Ctrl+S, then Manage deployments → Edit → New version → Deploy.
+- **Gotcha:** `curl -L -X POST` to the /exec URL can show **Error 411 (Length Required)**. That's curl re-POSTing to Google's redirect target without a body, not a script bug. The redirect means doPost ran. Verify with the real form in headless Edge instead.
+- **Verified 2026-09-26:** a test submit from localhost showed the success message, reset the form, and added a row with the right columns (row "Claude Test", which the user should delete).
+- **Authorization:** The "Google hasn't verified this app" warning is normal for a personal script. Click Advanced → Go to … (unsafe) → Allow. You don't need to go through Google's verification.
+
 ### 2026-09-26 — Multi-page structure after the Framer migration
 - **Pattern:** The site is now 4 pages sharing `styles.css`, `tailwind-config.js` and `site.js`. Each page repeats the nav and footer markup, so a nav or footer change has to be made in all 4 files. Each page sets `aria-current="page"` on its own nav link (desktop + mobile lists).
 - **Trigger:** Editing the nav, the footer, or adding a page.

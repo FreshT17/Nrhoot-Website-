@@ -22,6 +22,41 @@
     });
   });
 
+  // Waitlist: POST the fields to the Google Apps Script web app, which appends
+  // a row to the "Nrhoot waitlist request" sheet (see scripts/waitlist-apps-script.gs).
+  // A form-encoded body keeps this a "simple" request, so there's no CORS preflight.
+  document.querySelectorAll('form[data-sheet-endpoint]').forEach(function (form) {
+    var status = form.querySelector('.form-status');
+    var submit = form.querySelector('[type="submit"]');
+    var label = submit ? submit.textContent : '';
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (form.dataset.sending) return;
+      form.dataset.sending = '1';
+      if (submit) { submit.disabled = true; submit.textContent = 'Sending…'; }
+      if (status) status.textContent = '';
+
+      fetch(form.dataset.sheetEndpoint, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(form))
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (!data || !data.ok) throw new Error('rejected');
+          form.reset();
+          if (status) status.textContent = 'You’re on the list! We’ll email you when Nrhoot is ready.';
+        })
+        .catch(function () {
+          if (status) status.textContent = 'Something went wrong, so this wasn’t sent. Please try again.';
+        })
+        .then(function () {
+          delete form.dataset.sending;
+          if (submit) { submit.disabled = false; submit.textContent = label; }
+        });
+    });
+  });
+
   var btn = document.querySelector('.menu-btn');
   var menu = document.getElementById('mobile-menu');
   if (btn && menu) {
