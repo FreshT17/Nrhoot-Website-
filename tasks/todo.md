@@ -8,8 +8,8 @@ Full plan: `C:\Users\15622\.claude\plans\pasted-content-id-8c5f-i-m-migrating-pu
 
 - [x] 0. Capture old-site screenshots (scratchpad) and download old images to `assets/old-site/`
 - [x] 1. Homepage `index.html`: shared `styles.css` + `tailwind-config.js`, nav (4 pages), App Link hero, QR card, footer. **Stop for review.**
-- [ ] 2. `waitlist.html`: form components. **Stop for review.**
-- [ ] 3. `help.html`. **Stop for review.**
+- [x] 2. `waitlist.html`: form components. **Stop for review.**
+- [x] 3. `help.html`. **Stop for review.**
 - [ ] 4. `follow-us.html`: social button. **Stop for review.**
 - [ ] 5. Lessons + Review section
 

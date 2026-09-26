@@ -37,6 +37,8 @@ Things kept but reworked.
 | 2026-09-26 | Hero | "Your Neighborhood Produce Marketplace" + store badges + placeholder phone | Old App Link copy + "Click here to get the app" button + QR card + real Blueberries mockup |
 | 2026-09-26 | Logo | `brand_assets/Nrhoot_logo no background.png` (heavy padding, and 404s on local `serve.mjs` because of the %20) | `assets/logo-trimmed.png` (same logo, padding trimmed) |
 | 2026-09-26 | Footer | Section anchor links, mint background | Page links + Contact, white background (follows the hero wave) |
+| 2026-09-26 | New page: `waitlist.html` | (old Framer /old-home) | Same hero shell as the homepage. Heading + form (Name, Email, City, "Do you want early access?" Yes/No) + Blueberries mockup. New `.form-card`, `.field`, `.input` and `.btn-block` in `styles.css`. Submit is UI-only (`form[data-ui-only]` in `site.js`) and shows a "not connected yet" message. |
+| 2026-09-26 | New page: `help.html` | (old Framer /help) | Same shell as Waitlist. "Have a question?" + subtext + form (Name, Email, Question textarea) + Blueberries mockup. UI-only submit. Heading uses `text-wrap: balance` so it stays on one line on desktop. |
 
 ## Removed for good
 

@@ -18,6 +18,7 @@ Update this file after user corrections or post-mortems so the same mistakes are
 - **Pattern:** `serve.mjs` didn't `decodeURIComponent` the request path, so any asset with a space (`brand_assets/Nrhoot_logo%20no%20background.png`) returned 404 locally, though it works on real hosts.
 - **Fix (2026-09-26):** `serve.mjs` now decodes the path, and the logo with spaces returns 200. If port 3000 is already taken, check whether it's an old `serve.mjs` process that started before a code change, and restart it. Pages still use `assets/logo-trimmed.png` (no spaces, padding trimmed). Avoid spaces in new asset paths anyway.
 - **Pattern:** `npm init -y` read the UTF-16 README into a garbled `description` field. Write `package.json` by hand (minimal: name, private, scripts, devDependencies).
+- **Pattern:** Full-page screenshots can show a blank gap where a `.reveal` element is still mid-fade (380ms + delay). A blank area isn’t proof of a layout bug. After forcing `.on`, wait ~800ms before capturing.
 - **Pattern:** The old Framer phone-mockup PNGs (`assets/old-site/phone-*.png`) include the phone frame, with white corners around it. Nesting them in the CSS `.phone` frame draws a second frame.
 - **Fix:** Use `<div class="mockup"><img class="mockup-img"></div>`. The `clip-path` on `.mockup-img` removes the corners, and the wrapper carries the shadow so the clip doesn't cut it off.
 
