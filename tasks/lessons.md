@@ -12,6 +12,11 @@ Update this file after user corrections or post-mortems so the same mistakes are
 
 ## Entries
 
+### 2026-09-26 — Multi-page structure after the Framer migration
+- **Pattern:** The site is now 4 pages sharing `styles.css`, `tailwind-config.js` and `site.js`. Each page repeats the nav and footer markup, so a nav or footer change has to be made in all 4 files. Each page sets `aria-current="page"` on its own nav link (desktop + mobile lists).
+- **Trigger:** Editing the nav, the footer, or adding a page.
+- **Fix:** New pages: copy an existing page, then move `aria-current` in both nav lists. New forms: add `data-ui-only` plus a `<p class="form-status" role="status">` until a backend exists. Check links with a curl loop over every `href`/`src` on the 4 pages.
+
 ### 2026-09-26 — Local preview gotchas (screenshots, serve.mjs, old assets)
 - **Pattern:** `screenshot.mjs` used to hardcode `C:/Users/nateh/...` for Puppeteer and Chrome. Those paths came from the template author's machine, so the script failed here (user `15622`).
 - **Fix (2026-09-26, user-approved; replaces the earlier scratchpad-Playwright workaround):** `screenshot.mjs` now imports `puppeteer-core` (a devDependency in `package.json`) and launches the Windows Edge at `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`. After a fresh clone, run `npm install`. Verified with `node screenshot.mjs http://localhost:3000 edge-test`. Never hardcode another user's home folder.

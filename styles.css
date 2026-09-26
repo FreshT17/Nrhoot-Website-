@@ -399,3 +399,27 @@ select.input option { color: #000; }
 
 .form-status { font-size: 13px; line-height: 1.5; color: #3C3C43; margin-top: 16px; text-align: center; }
 .form-status:empty { display: none; }
+
+/* ─── SOCIAL BUTTON (feat-card surface, round) ─── */
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 112px;
+  height: 112px;
+  border-radius: 32px;
+  background: #fff;
+  color: #20C897;
+  border: 1px solid rgba(229,229,234,0.75);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 4px 18px rgba(32,200,151,0.09);
+  transition: transform 280ms cubic-bezier(0.22,1,0.36,1),
+              box-shadow 280ms cubic-bezier(0.22,1,0.36,1);
+}
+.social-btn svg { width: 52px; height: 52px; transition: transform 280ms cubic-bezier(0.22,1,0.36,1); }
+.social-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(32,200,151,0.18), 0 22px 52px rgba(0,0,0,0.09);
+}
+.social-btn:hover svg { transform: scale(1.06); }
+.social-btn:active { transform: scale(0.96); }
+.social-btn:focus-visible { outline: 2px solid #20C897; outline-offset: 4px; }
