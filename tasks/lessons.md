@@ -13,10 +13,11 @@ Update this file after user corrections or post-mortems so the same mistakes are
 ## Entries
 
 ### 2026-09-26 — Local preview gotchas (screenshots, serve.mjs, old assets)
-- **Pattern:** `screenshot.mjs` hardcodes `C:/Users/nateh/...` for Puppeteer and Chrome. Those paths don't exist on this machine (user `15622`), so it fails.
-- **Fix:** Use Playwright from the session scratchpad (`npm i playwright`; browsers are already cached in `~/AppData/Local/ms-playwright`). Point `screenshot.mjs` at a local install only if the user approves editing it.
-- **Pattern:** `serve.mjs` doesn't `decodeURIComponent` the request path. Any asset with a space (`brand_assets/Nrhoot_logo%20no%20background.png`) 404s locally, though it works on real hosts. This is why the logo never showed in local screenshots.
-- **Fix:** Pages use `assets/logo-trimmed.png` (no spaces, padding trimmed). Avoid spaces in new asset paths.
+- **Pattern:** `screenshot.mjs` used to hardcode `C:/Users/nateh/...` for Puppeteer and Chrome. Those paths came from the template author's machine, so the script failed here (user `15622`).
+- **Fix (2026-09-26, user-approved; replaces the earlier scratchpad-Playwright workaround):** `screenshot.mjs` now imports `puppeteer-core` (a devDependency in `package.json`) and launches the Windows Edge at `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`. After a fresh clone, run `npm install`. Verified with `node screenshot.mjs http://localhost:3000 edge-test`. Never hardcode another user's home folder.
+- **Pattern:** `serve.mjs` didn't `decodeURIComponent` the request path, so any asset with a space (`brand_assets/Nrhoot_logo%20no%20background.png`) returned 404 locally, though it works on real hosts.
+- **Fix (2026-09-26):** `serve.mjs` now decodes the path, and the logo with spaces returns 200. If port 3000 is already taken, check whether it's an old `serve.mjs` process that started before a code change, and restart it. Pages still use `assets/logo-trimmed.png` (no spaces, padding trimmed). Avoid spaces in new asset paths anyway.
+- **Pattern:** `npm init -y` read the UTF-16 README into a garbled `description` field. Write `package.json` by hand (minimal: name, private, scripts, devDependencies).
 - **Pattern:** The old Framer phone-mockup PNGs (`assets/old-site/phone-*.png`) include the phone frame, with white corners around it. Nesting them in the CSS `.phone` frame draws a second frame.
 - **Fix:** Use `<div class="mockup"><img class="mockup-img"></div>`. The `clip-path` on `.mockup-img` removes the corners, and the wrapper carries the shadow so the clip doesn't cut it off.
 

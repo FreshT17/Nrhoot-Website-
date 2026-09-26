@@ -1,10 +1,7 @@
-import { createRequire } from 'module';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
-const require = createRequire(import.meta.url);
-const puppeteer = require('C:/Users/nateh/AppData/Local/Temp/puppeteer-test/node_modules/puppeteer');
+import puppeteer from 'puppeteer-core';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -21,9 +18,13 @@ const n = existing.length ? Math.max(...existing) + 1 : 1;
 const filename = label ? `screenshot-${n}-${label}.png` : `screenshot-${n}.png`;
 const outPath = path.join(outDir, filename);
 
-const cacheBase = 'C:/Users/nateh/.cache/puppeteer/chrome';
-const buildDir = fs.readdirSync(cacheBase).find(d => d.startsWith('win64-'));
-const executablePath = path.join(cacheBase, buildDir, 'chrome-win64', 'chrome.exe');
+// Use the Microsoft Edge that ships with Windows, so no browser download is needed.
+const edgePaths = [
+  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
+];
+const executablePath = edgePaths.find(p => fs.existsSync(p));
+if (!executablePath) throw new Error('Microsoft Edge not found. Checked: ' + edgePaths.join(', '));
 
 const browser = await puppeteer.launch({ headless: 'new', executablePath });
 const page = await browser.newPage();
