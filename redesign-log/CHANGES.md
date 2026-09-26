@@ -17,7 +17,14 @@ Things taken out that you plan to re-add. Move an item to "Restored" once it's b
 
 | Date | What | Where it was (original `index.html`) | Notes / why removed |
 |------|------|--------------------------------------|---------------------|
-| | | | |
+| 2026-09-26 | Stats bar (500+ / 200+ / 50+) | L395 | Homepage now mirrors the old Framer "App Link" page only. Numbers were placeholders. |
+| 2026-09-26 | Features `#features` | L416 | Same reason. The `feat-card` styles are kept in `styles.css`. |
+| 2026-09-26 | App preview `#screenshots` | L462 | Same reason. The `phone` frame styles are kept. |
+| 2026-09-26 | How it works `#how-it-works` | L502 | Same reason. The `step-badge` styles are kept. |
+| 2026-09-26 | Reviews `#reviews` | L555 | Same reason. The testimonials were made up. The `testi-card` styles are kept. |
+| 2026-09-26 | Download CTA `#download` | L615 | Same reason. |
+| 2026-09-26 | Nav "Download Free" button | L300 | The old site nav had no CTA. |
+| 2026-09-26 | Google Play buttons | L359, L645 | The old site only linked to the App Store. |
 
 ## Changed
 
@@ -25,7 +32,11 @@ Things kept but reworked.
 
 | Date | What | Before | After |
 |------|------|--------|-------|
-| | | | |
+| 2026-09-26 | Page structure | One-page site, inline `<style>` + Tailwind config | Multi-page. Shared `styles.css`, `tailwind-config.js` and `site.js` |
+| 2026-09-26 | Nav links | Features / Preview / How It Works / Reviews (anchors) | App Link / Waitlist / Help / Follow Us (pages, from the old Framer site), with a current-page state. The mobile menu is now wired up. |
+| 2026-09-26 | Hero | "Your Neighborhood Produce Marketplace" + store badges + placeholder phone | Old App Link copy + "Click here to get the app" button + QR card + real Blueberries mockup |
+| 2026-09-26 | Logo | `brand_assets/Nrhoot_logo no background.png` (heavy padding, and 404s on local `serve.mjs` because of the %20) | `assets/logo-trimmed.png` (same logo, padding trimmed) |
+| 2026-09-26 | Footer | Section anchor links, mint background | Page links + Contact, white background (follows the hero wave) |
 
 ## Removed for good
 
