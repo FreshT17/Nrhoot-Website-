@@ -1,0 +1,19 @@
+# Safe commit flow (respects .gitignore — avoids eas-inspect / .cxx long paths)
+# From repo root in PowerShell:
+git add -A
+git status
+git commit -m "Describe your change"
+git push origin Branch-A1
+
+# -----------------------------------------------------------------------------
+# Older / simple flow (git add . — use only if .gitignore covers build artifacts)
+# -----------------------------------------------------------------------------
+git add . 
+git commit 
+git push 
+
+
+# PowerShell multiline (older):
+   git add . `
+   git commit `
+   git push

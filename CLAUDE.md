@@ -52,3 +52,13 @@
 - Do not stop after one screenshot pass
 - Do not use `transition-all`
 - Do not use default Tailwind blue/indigo as primary color
+
+## Lessons & Workflow
+- **Session start:** before substantive work, skim `tasks/lessons.md` for entries relevant to the files or areas you're about to touch.
+- **After any user correction, or after shipping a fix that turned out wrong:** append an entry to `tasks/lessons.md` in the same session, covering the pattern, the trigger, and the rule that prevents a repeat. Lessons are cumulative.
+- **Before finishing a task:** add any new gotchas or fixes to `tasks/lessons.md`.
+- **Plans:** for non-trivial tasks, write a checkable plan in `tasks/todo.md` and fill in its Review section when done.
+- **Standing instructions:** if the user says "always do X when Y", record it as a lesson labeled "Standing instruction (user request)" and follow it in future sessions.
+- **Topic runbooks:** when several entries pile up around one topic (e.g. local server/screenshots, or deploys), consolidate them into a runbook section above Entries, with commands, the errors seen, and their fixes.
+- **Ask before code changes:** before editing files, say what you'll change, which files, and why, then wait for approval, unless the user already gave explicit go-ahead for that exact change.
+- **Don't regress working code:** once something is verified working, don't rewrite it "for elegance" unless the user asks.
