@@ -12,6 +12,11 @@ Update this file after user corrections or post-mortems so the same mistakes are
 
 ## Entries
 
+### 2026-10-17 — App Link page: App Store + Google Play badges
+- **Change:** `index.html` hero now shows two `.app-btn` store badges (App Store → `apps.apple.com/us/app/nrhoot/id6756333531`, Google Play → `play.google.com/store/apps/details?id=com.nrhoot.app`). The user chose to remove the App Store-only QR card and the "or" divider. `.qr-card`/`.or-divider` CSS and `assets/old-site/qr-app-store.png` are now unused but kept.
+- **Gotcha:** `screenshot.mjs` is fixed at 1440×900. For a phone check, copy it into the project root (it must sit next to `node_modules` to resolve `puppeteer-core`) with the viewport set to `375, 812`, run it, then delete the copy.
+- **Reminder:** the custom domain's `CNAME` (www.nrhoot.com) lives on `redesign` and is committed by GitHub. Run `git pull origin redesign` before pushing.
+
 ### 2026-09-26 — Waitlist form → Google Sheet (Apps Script web app)
 - **Setup:** `waitlist.html` form has `data-sheet-endpoint="<Apps Script /exec URL>"`; `site.js` POSTs it as `URLSearchParams` (a simple request, so there's no CORS preflight) and expects `{ok:true}`. The script source is in `scripts/waitlist-apps-script.gs`, bound to the Drive sheet "Nrhoot waitlist request" (Sheet1). Row order: Date, Name, Email, City, Test User? (blank), Location. Column F is labeled "Location" but holds the early-access Yes/No, the same as the old Framer form's rows.
 - **Pattern:** The browser reports "blocked by CORS policy: No 'Access-Control-Allow-Origin'" whenever Google returns an HTML error page instead of the script's JSON. On first deploy this was an **Access Denied / "You need access"** page, because the deployment's access setting wasn't plain "Anyone".
